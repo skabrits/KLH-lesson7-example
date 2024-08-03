@@ -22,13 +22,13 @@
             "type": "GET"
         }).success(function(data){
             data = JSON.parse(data);
-            alert(data.length)
             if (data.status == 200){
-                for(var i=0; i < data.length; i++){
-                    $("#manuls").append("<label>" + data[i][0] + "</label><br><img src=\"" + data[i][1] + "\" />")
+                $("#manuls").empty()
+                for(var i=0; i < data.data.length; i++){
+                    $("#manuls").append("<label>" + data.data[i][0] + "</label><br><img src=\"" + data.data[i][1] + "\" />")
                 }
             } else {
-                alert("error, status: " + data.status);:
+                alert("error, status: " + data.status);
             }
         }).fail(function(jqXhr, statuscode, errorMSG){
             alert("error " + errorMSG);
