@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Счётчик манулов</title>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+</head>
+<body>
+    <form action="http://127.0.0.1:5000/api/manul" method="POST" enctype="multipart/form-data">
+        <label>Введите имя Манула</label><br>
+        <input type="text" id="manul_name" name="name" /><br><br>
+        <input type="file" name="file" /><!--Загрузить фото</input>--><br><br>
+        <button>Добавить манула</button>
+    </form>
+    <button id="refresh">Перезагрузить</button>
+    <div id="manuls"></div>
+</body>
+<script>
+    var endpoint = "http://127.0.0.1:5000";
+    $("#refresh").click(function(){
+        $.ajax(endpoint+"/api/manul", {
+            "type": "GET"
+        }).success(function(data){
+            data = JSON.parse(data);
+            alert(data.length)
+            if (data.status == 200){
+                for(var i=0; i < data.length; i++){
+                    $("#manuls").append("<label>" + data[i][0] + "</label><br><img src=\"" + data[i][1] + "\" />")
+                }
+            } else {
+                alert("error, status: " + data.status);:
+            }
+        }).fail(function(jqXhr, statuscode, errorMSG){
+            alert("error " + errorMSG);
+        });
+    })
+</script>
+</html>
